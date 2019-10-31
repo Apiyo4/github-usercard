@@ -10,6 +10,7 @@
    Skip to Step 3.
 */
 
+
 /* Step 4: Pass the data received from Github into your function, 
            create a new component and add it to the DOM as a child of .cards
 */
@@ -53,3 +54,56 @@ const followersArray = [];
   luishrd
   bigknell
 */
+
+function createCard(info){
+  const card= document.createElement("div");
+  const img = document.createElement('img');
+  const cardInfo= document.createElement("div");
+  const name= document.createElement("h3");
+  const username= document.createElement("p");
+  const location= document.createElement("p");
+  const profile= document.createElement("p");
+  const link= document.createElement("a");
+  const followers= document.createElement("p");
+  const following= document.createElement("p");
+  const bio= document.createElement("p");
+
+  card.append(img);
+  card.append(cardInfo);
+  cardInfo.append(name);
+  cardInfo.append(username);
+  cardInfo.append(location);
+  cardInfo.append(profile);
+  profile.append(link);
+  cardInfo.append(followers);
+  cardInfo.append(following);
+  cardInfo.append(bio);
+
+
+  card.classList.add("card");
+  cardInfo.classList.add("card-info");
+  name.classList.add("name");
+  username.classList.add("username");
+
+  img.src = info["avatar_url"];
+  name.textContent = info.name;
+  username.textContent = info.login;
+  location.textContent = `Location: ${info. location}`;
+  profile.textContent = `Profile: `
+  link.textContent = info["html_url"];
+  followers.textContent = `Followers: ${info.followers}`;
+  following.textContent = `Following: ${info.following}`;
+  bio.textContent =`Bio: ${info.bio}`;
+
+  return card;
+}
+const cards = document.querySelector('.cards');
+
+axios.get("https://api.github.com/users/Apiyo4")
+.then(response=>{
+   
+  cards.append(createCard(response.data))
+})
+.catch(error=>{
+  console.log(error);
+})
